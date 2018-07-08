@@ -19,7 +19,15 @@
   <link rel="stylesheet" href="/adminlte/plugins/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="/adminlte/css/skins/_all-skins.min.css">
 
-  <link rel="stylesheet" href="/adminlte/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="/adminlte/css/skins/skin-blue.min.css">  
+
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="/adminlte/plugins/daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="/adminlte/plugins/datepicker/datepicker3.css">
+    <!-- Select2 -->
+  <link rel="stylesheet" href="/adminlte/plugins/select2/select2.min.css">
+
 
  
 </head>
@@ -246,6 +254,10 @@
 
      @yield('content')
 
+     @if(session()->has('flash'))
+      -<alert class="alert-success"> {{ session('flash')}}</alert>
+     @endif
+
     </section>
     <!-- /.content -->
   </div>
@@ -352,7 +364,15 @@
 <script src="/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
 
-     <script>
+<!-- CK Editor -->
+<script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+
+  <!-- bootstrap datepicker -->
+<script src="/adminlte/plugins/datepicker/bootstrap-datepicker.js"></script>
+{{-- Multiple --}}
+<script src="/adminlte/plugins/select2/select2.full.min.js"></script>
+
+<script>
   $(function () {
     $("#posts-table").DataTable({
       "paging": true,
@@ -363,6 +383,15 @@
       "autoWidth": false
     });
   });
+
+CKEDITOR.replace('editor');
+
+  $('#datepicker').datepicker({
+autoclose: true
+});
+$(".select2").select2();
 </script>
+
+
 </body>
 </html>
