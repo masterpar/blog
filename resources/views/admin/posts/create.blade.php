@@ -20,13 +20,15 @@
 		<div class="col-sm-6">
 			<div class="box box-primary">
 				<div class="box-body">
-				<div class="form-group">
+				<div class="form-group {{ $errors->has('titulo') ?  'has-error' : '' }}">
 					<label>Titulo de la Publicación</label>
-						<input name="titulo" class="form-control" placeholder="Ingresa aquí el título de la publicación"></input>
+						<input value=" {{old('titulo') }}" name="titulo" class="form-control" placeholder="Ingresa aquí el título de la publicación"></input>
+						{!! $errors->first('titulo','<span class="help-block">:message</span>')!!}
 				</div>
-				<div class="form-group">
+				<div class="form-group {{ $errors->has('contenido') ?  'has-error' : '' }}">
 					<label>Contenido de la Publicación</label>
-						<textarea name="contenido" rows="10" class="form-control" id="editor" placeholder="Ingresa el contenido de la publicación"></textarea>
+						<textarea name="contenido" rows="10" class="form-control" id="editor" placeholder="Ingresa el contenido de la publicación">{{old('contenido') }}</textarea>
+						{!! $errors->first('contenido','<span class="help-block">:message</span>')!!}
 				</div>
 				</div>
 			</div>
@@ -36,39 +38,42 @@
 	<div class="col-sm-6">		
 		<div class="box box-primary">	
 				  <div class="box-body">
-				  	<div class="form-group">
+				  	<div class="form-group ">
                			 <label>Fecha de publicación:</label>
 		                   <div class="input-group date">
 			                  <div class="input-group-addon">
 			                    	<i class="fa fa-calendar"></i>
 			                  </div>
-			                  		<input name="publicado_en" type="text" class="form-control pull-right" id="datepicker">
+			                  		<input value="{{old('publicado_en')}}" name="publicado_en" type="text" class="form-control pull-right" id="datepicker">
 		                   </div>
               		</div>
 
-              		<div class="form-group">
+              		<div class="form-group {{ $errors->has('category') ?  'has-error' : '' }}">
               			<label>Categorías</label>
               			<select name="category" class="form-control">
               				<option value="">Selecciona una categoría</option>
               				@foreach($categories as $category)
-              				<option value="{{ $category->id}}"> {{$category->nombre }}</option>
+              				<option value="{{ $category->id}}" {{old('category') == $category->id ? 'selected' : '' }}> {{$category->nombre }}</option>
+
               				@endforeach
               			</select>
+              			{!! $errors->first('category','<span class="help-block">:message</span>')!!}
               		</div>
 
               		<div class="form-group">
               			<label>Etiquetas</label>
-              			 <select name="tags" class="form-control select2"multiple="multiple" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+              			 <select name="tags[]" class="form-control select2"multiple="multiple" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
 
 			              @foreach($tags as $tag)
-			              <option value="{{$tag->id }}">{{$tag->nombre }}</option>
+			              <option {{ collect(old('tags'))->contains($tag->id) ? 'selected' : ''}} value="{{$tag->id }}">{{$tag->nombre }}</option>
 			              @endforeach
 			             </select>
               		</div>
 
-						<div class="form-group">
+						<div class="form-group {{ $errors->has('resumen') ?  'has-error' : '' }}">
 								<label>Resumen de la Publicación</label>
-									<textarea name="resumen" class="form-control" placeholder="Ingresa un resumen de la publicación"></textarea>
+									<textarea name="resumen" class="form-control" placeholder="Ingresa un resumen de la publicación"> {{old('resumen') }}</textarea>
+									{!! $errors->first('resumen','<span class="help-block">:message</span>')!!}
 						</div>
 
 						<div class="form-group">

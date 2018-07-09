@@ -11,8 +11,9 @@ class PagesController extends Controller
 
     public function home()
     {
-    
-    $posts = Post::latest('publicado_en')->get();
-	return view('welcome',compact('posts'));
+
+    	$posts=Post::Publicado()->get();    
+
+		return view('welcome',compact('posts'));
     }
 }

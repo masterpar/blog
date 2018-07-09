@@ -21,7 +21,7 @@
                 <p>{{ $post->resumen}}</p>
                 <footer class="container-flex space-between">
                     <div class="read-more">
-                        <a href="#" class="text-uppercase c-green">seguir leyendo</a>
+                        <a href="blog/{{$post->url}}" class="text-uppercase c-green">seguir leyendo</a>
                     </div>
                     <div class="tags container-flex">
                         @foreach($post->tags as $tag)

@@ -252,11 +252,11 @@
     <!-- Main content -->
     <section class="content">
 
-     @yield('content')
+           @if(session()->has('flash'))
+             <alert class="alert alert-success"> {{ session('flash')}}</alert>
+           @endif
 
-     @if(session()->has('flash'))
-      -<alert class="alert-success"> {{ session('flash')}}</alert>
-     @endif
+     @yield('content')
 
     </section>
     <!-- /.content -->
@@ -267,10 +267,10 @@
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Anything you want
+      Blink
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2018 <a href="#">Company</a>.</strong> Derechos reservador.
   </footer>
 
   <!-- Control Sidebar -->
