@@ -4,7 +4,7 @@
 
 Route::get('/', 'PagesController@home');
 Route::get('/blog/{post}', 'PostsController@show');
-
+//rutas user
 
 Route::group([
 	'prefix' => 'admin',

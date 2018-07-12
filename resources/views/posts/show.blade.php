@@ -1,5 +1,8 @@
 @extends('plantillas.pl-principal')
 
+@section('meta-title', $post->titulo)
+@section('meta-description', $post->resumen)
+
 @section('content')
 
   <article class="post image-w-text container">

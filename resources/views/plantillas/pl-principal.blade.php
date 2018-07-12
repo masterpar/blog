@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Blog</title>
+    <title> @yield('meta-title', 'Blog ' .'|' .' laravel')    </title>
+    <meta name="description" content="@yield('meta-description','Blog de laravel')">
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/framework.css">
     <link rel="stylesheet" href="/css/style.css">

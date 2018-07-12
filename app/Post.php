@@ -26,7 +26,7 @@ class Post extends Model
 		return $this->belongsToMany(Tag::class);
 	}
 
-	public function scopepublicado($query)
+	public function scopePublicado($query)
 	{
 			$query->WhereNotNull('publicado_en')
 				  ->where('publicado_en', '<=' , Carbon::now() )

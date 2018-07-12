@@ -12,8 +12,7 @@ class PagesController extends Controller
     public function home()
     {
 
-    	$posts=Post::Publicado()->get();    
-
+    	$posts=Post::Publicado()->get();  
 		return view('welcome',compact('posts'));
     }
 }
