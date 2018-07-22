@@ -5,7 +5,21 @@
 
 @section('content')
 
-  <article class="post image-w-text container">
+  <article class="post container">
+                                            {{--  Imagen --}}
+  @if($post->photos->count() === 1)
+
+    <figure><img src="{{ $post->photos->first()->url }}" alt="" class="img-responsive"></figure>
+  
+                                             {{--  Galería --}}
+  @elseif($post->photos->count() > 1)
+    <div class="gallery-photos masonry">
+                    @foreach($post->photos as $photo)
+                        <figure class="gallery-image"><img src="{{ url($photo->url) }}" alt=""></figure>
+                    @endforeach
+    </div>
+  @endif
+
     <div class="content-post">
       <header class="container-flex space-between">
         <div class="date">

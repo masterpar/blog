@@ -28,6 +28,9 @@
     <!-- Select2 -->
   <link rel="stylesheet" href="/adminlte/plugins/select2/select2.min.css">
 
+    {{-- dropzone --}}
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
+
 
  
 </head>
@@ -62,7 +65,7 @@
               <span class="label label-success">4</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
+              <li class="header">Tienes 4 mensajes</li>
               <li>
                 <!-- inner menu: contains the messages -->
                 <ul class="menu">
@@ -74,18 +77,18 @@
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
-                        Support Team
+                        Soporte
                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4>
                       <!-- The message -->
-                      <p>Why not buy a new awesome theme?</p>
+                      <p>Comentario</p>
                     </a>
                   </li>
                   <!-- end message -->
                 </ul>
                 <!-- /.menu -->
               </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
+              <li class="footer"><a href="#">Ver todos los Mensajes</a></li>
             </ul>
           </li>
           <!-- /.messages-menu -->
@@ -98,19 +101,19 @@
               <span class="label label-warning">10</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">Tienes 10 Notificaciones</li>
               <li>
                 <!-- Inner Menu: contains the notifications -->
                 <ul class="menu">
                   <li><!-- start notification -->
                     <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      <i class="fa fa-users text-aqua"></i> 5 nuevos miembros se unieron hoy
                     </a>
                   </li>
                   <!-- end notification -->
                 </ul>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
+              <li class="footer"><a href="#">Ver todo</a></li>
             </ul>
           </li>
           <!-- Tasks Menu -->
@@ -121,7 +124,7 @@
               <span class="label label-danger">9</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
+              <li class="header">Tienes 9 Tareas</li>
               <li>
                 <!-- Inner menu: contains the tasks -->
                 <ul class="menu">
@@ -129,7 +132,7 @@
                     <a href="#">
                       <!-- Task title and progress text -->
                       <h3>
-                        Design some buttons
+                        tarea 1
                         <small class="pull-right">20%</small>
                       </h3>
                       <!-- The progress bar -->
@@ -145,7 +148,7 @@
                 </ul>
               </li>
               <li class="footer">
-                <a href="#">View all tasks</a>
+                <a href="#">Ver todas las tareas</a>
               </li>
             </ul>
           </li>
@@ -156,7 +159,7 @@
               <!-- The user image in the navbar-->
               <img src="/adminlte/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs"> {{ auth()->user()->name }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -164,21 +167,21 @@
                 <img src="/adminlte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{ auth()->user()->name }}  - Email: {{ auth()->user()->email }} 
+                  <small>{{ auth()->user()->created_at }} </small>
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                    <a href="#">Seguidores</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
+                    <a href="#">Ventas</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
+                    <a href="#">Amigos</a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -186,10 +189,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Cerrar Sesión</a>
                 </div>
               </li>
             </ul>
@@ -371,6 +374,9 @@
 <script src="/adminlte/plugins/datepicker/bootstrap-datepicker.js"></script>
 {{-- Multiple --}}
 <script src="/adminlte/plugins/select2/select2.full.min.js"></script>
+{{-- DropZone --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
 
 <script>
   $(function () {
@@ -385,11 +391,34 @@
   });
 
 CKEDITOR.replace('editor');
+CKEDITOR.config.height = 315;
 
   $('#datepicker').datepicker({
 autoclose: true
 });
 $(".select2").select2();
+
+var myDropzone = new Dropzone('.dropzone', {
+
+  url: '/admin/posts/{{ $post->url }}/photos',
+
+  acceptedFiles: 'image/*',
+  maxFilesize: 2,
+  paramName: 'photo',
+  headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          }, 
+  dictDefaultMessage: 'Arrastra aquí las fotos para subirlas'
+
+});
+
+myDropzone.on('error', function(file, res){
+  var msg = res.errors.photo[0];
+  $('.dz-error-message:last > span').text(msg);
+});
+
+Dropzone.autoDiscover = false;
+
 </script>
 
 

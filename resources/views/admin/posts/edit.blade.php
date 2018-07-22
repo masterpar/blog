@@ -13,6 +13,30 @@
 
 @section('content')
 
+	 													{{-- fotos --}}
+@if($post->photos->count())
+ 				<div class="col-sm-12">
+ 					<div class="box box-primary">
+ 						<div class="box-body">
+							<div class="row">
+								@foreach($post->photos as $photo)
+									<form method="POST" action="{{route('admin.photos.destroy', $photo) }}">
+										@csrf {{method_field('DELETE') }} 
+
+									<div class="col-sm-2">
+										<button class="btn btn-danger btn-xs" style="position: absolute" >
+											<i class="fa fa-remove">									
+											</i>
+										</button>
+											<img class="img-responsive" src="{{url($photo->url) }}">
+									</div>
+									</form>
+								@endforeach					
+							</div> 							
+ 						</div>
+ 					</div>
+ 				</div>
+@endif
 
 <div class="row">
 	<form method="POST" action=" {{ route('admin.posts.update',$post) }}">
@@ -20,17 +44,25 @@
 		<div class="col-sm-6">
 			<div class="box box-primary">
 				<div class="box-body">
+
+										{{-- título publicación --}}
+
 				<div class="form-group {{ $errors->has('titulo') ?  'has-error' : '' }}">
 					<label>Titulo de la Publicación</label>
 						<input value=" {{ old('titulo', $post->titulo) }}" name="titulo" class="form-control" placeholder="Ingresa aquí el título de la publicación"></input>
 						{!! $errors->first('titulo','<span class="help-block">:message</span>')!!}
 				</div>
+
+												{{-- Contenido publicación --}}
+
 				<div class="form-group {{ $errors->has('contenido') ?  'has-error' : '' }}">
 					<label>Contenido de la Publicación</label>
 						<textarea name="contenido" rows="10" class="form-control" id="editor" placeholder="Ingresa el contenido de la publicación">
 							{{old('contenido', $post->contenido) }}</textarea>
 						{!! $errors->first('contenido','<span class="help-block">:message</span>')!!}
 				</div>
+
+		
 				</div>
 			</div>
 		</div>
@@ -77,7 +109,15 @@
 										{{old('resumen',$post->resumen) }}</textarea>
 									{!! $errors->first('resumen','<span class="help-block">:message</span>')!!}
 						</div>
-
+							
+							{{--  DropZone --}}
+						<div class="form-group">
+							<div class="dropzone">
+								
+							</div>
+						</div>
+		
+											{{--  Boton Guardar --}}
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary btn-block">Guargar Publicación</button>
 						</div>	
@@ -86,6 +126,7 @@
 		</div>
 	</div>
  </form>
+				
  </div>
 </div>
 

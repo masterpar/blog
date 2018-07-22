@@ -276,6 +276,10 @@ a.btn-bar{
 
 
      }
+
+     .gallery-photos {
+     	overflow: hidden;
+     }
       
 
 

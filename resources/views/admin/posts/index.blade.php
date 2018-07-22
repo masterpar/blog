@@ -28,6 +28,7 @@
                   <th>id</th>
                   <th>Título</th>
                   <th>Resumen</th>
+                  <th>No. Fotos</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
@@ -37,6 +38,7 @@
       				<td> {{ $post->id}}</td>
       				<td> {{ $post->titulo}}</td>
       				<td> {{ $post->resumen}}</td>
+              <td> {{ $post->photos()->count()}}</td>
       				<td>
       					<a target="_blank" href="/blog/{{$post->url}}" class="btn btn-success"><i class="fa fa-eye"></i></a>
       					<a href="{{ route('admin.posts.edit',$post) }}" class="btn btn-info"><i class="fa fa-pencil"></i></a>

@@ -10,12 +10,17 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
 
+
+      <div class="modal-body">
         <div class="form-group {{ $errors->has('titulo') ?  'has-error' : '' }}">
-          <label>Titulo de la Publicación</label>
-            <input value=" {{old('titulo') }}" name="titulo" class="form-control" placeholder="Ingresa aquí el título de la publicación"></input>
-            {!! $errors->first('titulo','<span class="help-block">:message</span>')!!}
+
+            <label>Titulo de la Publicación</label>
+              <input value=" {{old('titulo') }}"
+                name="titulo" class="form-control"
+                placeholder="Ingresa aquí el título de la publicación" required>              
+              </input>
+                {!! $errors->first('titulo','<span class="help-block">:message</span>')!!}
         </div>
 
       </div>
