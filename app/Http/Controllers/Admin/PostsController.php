@@ -24,11 +24,30 @@ class PostsController extends Controller
     	return view('admin.posts.create', compact('categories','tags'));
     }
 
+   
     public function store(Request $request)
     {
-       //return  $request->all();
-      //dd(($request->publicado_en)!= null);
+        $this->validate($request, ['titulo' => 'required']);
+        $post =new  Post;
+        $post->titulo =  $request->get('titulo');
+        $post->url =  str_slug($request->get('titulo'));
+        $post->save();
 
+        return redirect()->route('admin.posts.edit', $post);
+    }
+
+    public function edit(Post $post)
+    {
+         $tags = Tag::all();
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('categories','tags','post'));
+    }
+
+
+
+    public function update(Post $post, Request $request)
+    {
+      
         $this->validate($request, [
             'titulo' => 'required',
             'contenido' => 'required',
@@ -36,7 +55,6 @@ class PostsController extends Controller
             'resumen' => 'required'
         ]);
 
-        $post = new Post;
         $post->titulo = $request->titulo;
         $post->url = str_slug($request->titulo);
         $post->contenido = $request->contenido;
@@ -46,8 +64,8 @@ class PostsController extends Controller
         //etiquetas
         $post->save();
 
-        $post->tags()->attach($request->tags);
-        return back()->with('flash','Tu publicación a sido creada!');
+        $post->tags()->sync($request->get('tags'));
+        return back()->with('flash','Tu publicación a sido guardada!');
 
     }
 }

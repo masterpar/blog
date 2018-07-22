@@ -60,6 +60,6 @@
             </div>
         </footer>
     </section>
-    
+    @include('admin.posts.create')
 </body>
 </html>
